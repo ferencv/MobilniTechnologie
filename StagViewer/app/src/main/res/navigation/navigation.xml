@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/subjectsFragment">
+
+    <fragment
+        android:id="@+id/subjectsFragment"
+        android:name="com.example.stagviewer.ui.main.SubjectsFragment"
+        android:label="fragment_subjects"
+        tools:layout="@layout/fragment_subjects" >
+        <action
+            android:id="@+id/action_subjectsFragment_to_subjectDetailFragment"
+            app:destination="@id/subjectDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subjectDetailFragment"
+        android:name="com.example.stagviewer.ui.main.SubjectDetailFragment"
+        android:label="fragment_subject_detail"
+        tools:layout="@layout/fragment_subject_detail" />
+</navigation>
