@@ -9,7 +9,7 @@
         android:id="@+id/subjectsFragment"
         android:name="com.example.stagviewer.ui.main.SubjectsFragment"
         android:label="fragment_subjects"
-        tools:layout="@layout/fragment_subjects" >
+        tools:layout="@layout/fragment_search" >
         <action
             android:id="@+id/action_subjectsFragment_to_subjectDetailFragment"
             app:destination="@id/subjectDetailFragment" />
@@ -18,5 +18,5 @@
         android:id="@+id/subjectDetailFragment"
         android:name="com.example.stagviewer.ui.main.SubjectDetailFragment"
         android:label="fragment_subject_detail"
-        tools:layout="@layout/fragment_subject_detail" />
+        tools:layout="@layout/fragment_detail" />
 </navigation>

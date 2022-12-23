@@ -5,9 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.Toast
-import com.example.stagviewer.ui.main.MainFragment
+import com.example.stagviewer.Search.SearchFragment
 import androidx.databinding.DataBindingUtil
 import com.example.stagviewer.databinding.ActivityMainBinding
 
@@ -20,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, SearchFragment.newInstance())
                     .commitNow()
         }
 
