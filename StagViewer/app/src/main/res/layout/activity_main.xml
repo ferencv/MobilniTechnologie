@@ -5,42 +5,12 @@
     android:id="@+id/container"
     tools:context=".MainActivity" >
 
-    <LinearLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        app:navGraph="@navigation/navigation"
+        app:defaultNavHost="true"
+        />
 
-        <EditText
-            android:id="@+id/subjectIdInput"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_weight="1"
-            android:ems="10"
-            android:hint="@string/SubjectAbbrev"
-            android:inputType="textPersonName" />
-
-        <Button
-            android:id="@+id/submitButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Search" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/SearchResults" />
-
-        <fragment
-            android:id="@+id/myNavHostFragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:navGraph="@navigation/navigation"
-            app:defaultNavHost="true"
-            />
-
-    </LinearLayout>
 </layout>

@@ -1,13 +1,15 @@
 package com.example.stagviewer.Database
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.stagviewer.Search.ProgramModel
+import com.example.stagviewer.wut.ProgramModel
 
-data class Program(
+@Entity
+class Program constructor(
     @PrimaryKey
     var id: Int = 0,
-    var combId: Int = 0,
-    var studyProgramId: Int = 0,
+    //var combId: Int = 0,
+    //var studyProgramId: Int = 0,
     var name: String = "",
     var facultyShort: String = "",
     var faculty: String = "",
@@ -18,10 +20,10 @@ data class Program(
     var language: String = "",
     var languageShort: String = "",
     var year: Int = 0,
-    var oneField: Boolean = false,
-    var onlineAppForm: Boolean = false,
-    var onlineAppFormDeadline: String = "",
-    var displayFrom: String = "")
+    //var oneField: Boolean = false,
+    //var onlineAppForm: Boolean = false,
+    var onlineAppFormDeadline: String? = "",
+    var displayFrom: String? = "")
 {
 }
 
@@ -29,8 +31,8 @@ fun List<Program>.toProgramModels(): List<ProgramModel> {
     return map {
         ProgramModel(
             id = it.id,
-            combId = it.combId,
-            studyProgramId = it.studyProgramId,
+            //combId = it.combId,
+            //studyProgramId = it.studyProgramId,
             name = it.name,
             facultyShort = it.facultyShort,
             faculty = it.faculty,
@@ -39,9 +41,9 @@ fun List<Program>.toProgramModels(): List<ProgramModel> {
             typeShort = it.typeShort,
             language = it.language,
             languageShort = it.languageShort,
-            year = it.year,
-            oneField = it.oneField,
-            onlineAppForm = it.onlineAppForm,
+            year = it.year.toString(),
+            //oneField = it.oneField,
+            //onlineAppForm = it.onlineAppForm,
             onlineAppFormDeadline = it.onlineAppFormDeadline,
             displayFrom = it.displayFrom
             )

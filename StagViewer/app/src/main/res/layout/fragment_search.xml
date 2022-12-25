@@ -5,32 +5,42 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.stagviewer.Search.SearchViewModel" />
+            type="com.example.stagviewer.wut.SearchViewModel" />
     </data>
 
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
+        <EditText
+            android:id="@+id/facultyInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/Faculty"
+            android:inputType="textPersonName" />
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:orientation="vertical">-->
+        <Button
+            android:id="@+id/submitButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/Search" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/subjectAbbrevLabel"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Zkratka" />-->
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/SearchResults" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/subjectNameLabel"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Název" />-->
-<!--    </LinearLayout>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/table_item" />
 
-</FrameLayout>
+    </LinearLayout>
 </layout>

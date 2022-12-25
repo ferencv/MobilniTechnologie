@@ -1,11 +1,9 @@
-package com.example.stagviewer.Search
-
-import androidx.room.PrimaryKey
+package com.example.stagviewer.wut
 
 data class ProgramModel(
     var id: Int = 0,
-    var combId: Int = 0,
-    var studyProgramId: Int = 0,
+    //var combId: Int = 0,
+    //var studyProgramId: Int = 0,
     var name: String = "",
     var facultyShort: String = "",
     var faculty: String = "",
@@ -15,11 +13,8 @@ data class ProgramModel(
     var typeShort: String = "",
     var language: String = "",
     var languageShort: String = "",
-    var year: Int = 0,
-    var oneField: Boolean = false,
-    var onlineAppForm: Boolean = false,
-    var onlineAppFormDeadline: String = "",
-    var displayFrom: String = "")
-{
-
-}
+    var year: String = "0",
+    //var oneField: Boolean = false,
+    //var onlineAppForm: Boolean = false,
+    var onlineAppFormDeadline: String? = "",
+    var displayFrom: String? = "")
