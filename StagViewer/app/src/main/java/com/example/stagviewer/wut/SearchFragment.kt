@@ -1,8 +1,7 @@
 package com.example.stagviewer.wut
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagviewer.R
@@ -32,7 +32,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.programs.observe(viewLifecycleOwner, Observer<List<ProgramModel>> { programs ->
+        viewModel.programs.observe(viewLifecycleOwner, Observer<List<StagProgramModel>> { programs ->
             programs?.apply {
                 viewModelAdapter?.programs = programs
             }
@@ -52,20 +52,13 @@ class SearchFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModelAdapter = ProgramAdapter(ProgramClick {
-            // When a video is clicked this block or lambda will be called by DevByteAdapter
+            //Toast.makeText(activity, "clicked", Toast.LENGTH_LONG).show()
 
-            // context is not around, we can safely discard this click since the Fragment is no
-            // longer on the screen
-            val packageManager = context?.packageManager ?: return@ProgramClick
+            val action = SearchFragmentDirections.actionSearchFragmentToSubjectDetailFragment(it)
+            binding.root.findNavController().navigate(action)
 
-//            // Try to generate a direct intent to the YouTube app
-//            var intent = Intent(Intent.ACTION_VIEW, it.launchUri)
-//            if(intent.resolveActivity(packageManager) == null) {
-//                // YouTube app isn't found, use the web url
-//                intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.url))
-//            }
-
-            //startActivity(intent)
+//            binding.root.findNavController()
+//               .navigate(R.id.subjectDetailFragment)
         })
 
         binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {
@@ -92,8 +85,8 @@ class SearchFragment : Fragment() {
 
 }
 
-class ProgramClick(val block: (ProgramModel) -> Unit) {
-    fun onClick(program: ProgramModel) = block(program)
+class ProgramClick(val callback: (StagProgramModel) -> Unit) {
+    fun onClick(program: StagProgramModel) = callback(program)
 }
 
 /**
@@ -101,7 +94,7 @@ class ProgramClick(val block: (ProgramModel) -> Unit) {
  */
 class ProgramAdapter(val callback: ProgramClick) : RecyclerView.Adapter<ProgramViewHolder>() {
 
-    var programs: List<ProgramModel> = emptyList()
+    var programs: List<StagProgramModel> = emptyList()
         set(value) {
             field = value
             // For an extra challenge, update this to use the paging library.
@@ -148,5 +141,14 @@ class ProgramViewHolder(val viewDataBinding: TableItemBinding) :
     companion object {
         @LayoutRes
         val LAYOUT = R.layout.table_item
+    }
+    fun bind(
+        item : StagProgramModel,
+        clickListener: ProgramClick
+    )
+    {
+        viewDataBinding.program = item
+        viewDataBinding.clickCallback = clickListener
+        viewDataBinding.executePendingBindings()
     }
 }

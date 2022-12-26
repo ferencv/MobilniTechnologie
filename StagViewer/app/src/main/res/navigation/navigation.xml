@@ -7,5 +7,21 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.stagviewer.wut.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_searchFragment_to_subjectDetailFragment"
+            app:destination="@id/subjectDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/subjectDetailFragment"
+        android:name="com.example.stagviewer.Detail.SubjectDetailFragment"
+        android:label="SubjectDetailFragment" >
+        <action
+            android:id="@+id/action_subjectDetailFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <argument
+            android:name="program"
+            app:argType="com.example.stagviewer.wut.StagProgramModel" />
+    </fragment>
 </navigation>

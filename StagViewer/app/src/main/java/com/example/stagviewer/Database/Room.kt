@@ -5,28 +5,28 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
-interface ProgramDao {
+interface StagProgramDao {
 
-    @Query("select * from Program")
-    fun getPrograms(): LiveData<List<Program>>
+    @Query("select * from StagProgram")
+    fun getStagPrograms(): LiveData<List<StagProgram>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(programs: List<Program>)
+    fun insertAll(programs: List<StagProgram>)
 }
 
-@Database(entities = [Program::class], version = 1)
-abstract class ProgramsDatabase: RoomDatabase() {
-    abstract val programDao: ProgramDao
+@Database(entities = [StagProgram::class], version = 1)
+abstract class StagProgramsDatabase: RoomDatabase() {
+    abstract val stagProgramDao: StagProgramDao
 }
 
-private lateinit var INSTANCE: ProgramsDatabase
+private lateinit var INSTANCE: StagProgramsDatabase
 
-fun getDatabase(context: Context): ProgramsDatabase {
-    synchronized(ProgramsDatabase::class.java) {
+fun getDatabase(context: Context): StagProgramsDatabase {
+    synchronized(StagProgramsDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
-                ProgramsDatabase::class.java,
-                "Stag").build()
+                StagProgramsDatabase::class.java,
+                "StagPrograms").build()
         }
     }
     return INSTANCE

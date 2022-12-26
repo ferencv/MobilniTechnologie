@@ -8,4 +8,9 @@
     <string name="Typ">Typ</string>
     <string name="Faculty">Fakulta</string>
     <string name="Year">Rok</string>
+    <string name="pozadavkyKPrijeti">Požadavky k přijetí</string>
+    <string name="maximalniDelkaStudia">Maximální délka studia</string>
+    <string name="standardniDelkaStudia">Standardní délka studia</string>
+    <string name="kod">Kód</string>
+    <string name="nazev">Název</string>
 </resources>

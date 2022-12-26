@@ -1,6 +1,6 @@
 package com.example.stagviewer.wut
 
-data class ProgramModel(
+data class CataloqueProgramModel(
     var id: Int = 0,
     //var combId: Int = 0,
     //var studyProgramId: Int = 0,

@@ -1,6 +1,6 @@
 package com.example.stagviewer.network
 
-class StagProgram(
+class CataloqueProgramDTO(
     var id: Int = 0,
     //var combId: Int = 0,
     //var studyProgramId: Int = 0,

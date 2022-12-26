@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.stagviewer.Database.getDatabase
-import com.example.stagviewer.repository.ProgramRepository
+import com.example.stagviewer.repository.StagProgramRepository
 import kotlinx.coroutines.*
 import java.io.IOException
 
@@ -16,7 +16,7 @@ import java.io.IOException
 class SearchViewModel(application: Application) : AndroidViewModel(application) {
 
     // The internal MutableLiveData String that stores the most recent response
-    private val programRepository = ProgramRepository(getDatabase(application))
+    private val programRepository = StagProgramRepository(getDatabase(application))
     val programs = programRepository.programs
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean> get() = _eventNetworkError

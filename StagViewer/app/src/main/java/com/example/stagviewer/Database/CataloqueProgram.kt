@@ -2,10 +2,10 @@ package com.example.stagviewer.Database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.stagviewer.wut.ProgramModel
+import com.example.stagviewer.wut.CataloqueProgramModel
 
 @Entity
-class Program constructor(
+class CataloqueProgram constructor(
     @PrimaryKey
     var id: Int = 0,
     //var combId: Int = 0,
@@ -27,9 +27,9 @@ class Program constructor(
 {
 }
 
-fun List<Program>.toProgramModels(): List<ProgramModel> {
+fun List<CataloqueProgram>.toProgramModels(): List<CataloqueProgramModel> {
     return map {
-        ProgramModel(
+        CataloqueProgramModel(
             id = it.id,
             //combId = it.combId,
             //studyProgramId = it.studyProgramId,
