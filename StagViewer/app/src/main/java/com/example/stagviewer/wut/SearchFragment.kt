@@ -1,12 +1,10 @@
 package com.example.stagviewer.wut
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagviewer.R
 import com.example.stagviewer.databinding.FragmentSearchBinding
-import com.example.stagviewer.databinding.TableItemBinding
+
 
 class SearchFragment : Fragment() {
 
@@ -35,6 +33,7 @@ class SearchFragment : Fragment() {
         viewModel.programs.observe(viewLifecycleOwner, Observer<List<StagProgramModel>> { programs ->
             programs?.apply {
                 viewModelAdapter?.programs = programs
+                viewModel.updateResultString(programs.size)
             }
         })
     }
@@ -50,6 +49,20 @@ class SearchFragment : Fragment() {
         binding.setLifecycleOwner(viewLifecycleOwner)
 
         binding.viewModel = viewModel
+
+        binding.submitButton.setOnClickListener(
+            {
+                viewModel.searchNameChanged(binding.facultyInput.text.toString())
+            });
+
+        // Create the observer which updates the UI.
+        val nameObserver = Observer<String> { newName ->
+            // Update the UI, in this case, a TextView.
+            binding.textView2.text = newName
+        }
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel.resultString.observe(viewLifecycleOwner, nameObserver)
 
         viewModelAdapter = ProgramAdapter(ProgramClick {
             //Toast.makeText(activity, "clicked", Toast.LENGTH_LONG).show()
@@ -85,70 +98,3 @@ class SearchFragment : Fragment() {
 
 }
 
-class ProgramClick(val callback: (StagProgramModel) -> Unit) {
-    fun onClick(program: StagProgramModel) = callback(program)
-}
-
-/**
- * RecyclerView Adapter for setting up data binding on the items in the list.
- */
-class ProgramAdapter(val callback: ProgramClick) : RecyclerView.Adapter<ProgramViewHolder>() {
-
-    var programs: List<StagProgramModel> = emptyList()
-        set(value) {
-            field = value
-            // For an extra challenge, update this to use the paging library.
-
-            // Notify any registered observers that the data set has changed. This will cause every
-            // element in our RecyclerView to be invalidated.
-            notifyDataSetChanged()
-        }
-
-    /**
-     * Called when RecyclerView needs a new {@link ViewHolder} of the given type to represent
-     * an item.
-     */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProgramViewHolder {
-        val withDataBinding: TableItemBinding = DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            ProgramViewHolder.LAYOUT,
-            parent,
-            false)
-        return ProgramViewHolder(withDataBinding)
-    }
-
-    override fun getItemCount() = programs.size
-
-    /**
-     * Called by RecyclerView to display the data at the specified position. This method should
-     * update the contents of the {@link ViewHolder#itemView} to reflect the item at the given
-     * position.
-     */
-    override fun onBindViewHolder(holder: ProgramViewHolder, position: Int) {
-        holder.viewDataBinding.also {
-            it.program = programs[position]
-            it.clickCallback = callback
-        }
-    }
-
-}
-
-/**
- * ViewHolder for DevByte items. All work is done by data binding.
- */
-class ProgramViewHolder(val viewDataBinding: TableItemBinding) :
-    RecyclerView.ViewHolder(viewDataBinding.root) {
-    companion object {
-        @LayoutRes
-        val LAYOUT = R.layout.table_item
-    }
-    fun bind(
-        item : StagProgramModel,
-        clickListener: ProgramClick
-    )
-    {
-        viewDataBinding.program = item
-        viewDataBinding.clickCallback = clickListener
-        viewDataBinding.executePendingBindings()
-    }
-}

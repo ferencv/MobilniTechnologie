@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="itemBackgroundColor">#E1C9FF</color>
     <color name="itemBorderColor">#000000</color>
+    <color name="appBackground" >#FFFCFFD7</color>
 
 </resources>

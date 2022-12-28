@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -17,7 +18,33 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     // The internal MutableLiveData String that stores the most recent response
     private val programRepository = StagProgramRepository(getDatabase(application))
-    val programs = programRepository.programs
+    private var _searchName = MutableLiveData<String>("")
+    var searchName: String?
+        get() = _searchName.value
+        set(value) { _searchName.value = value }
+
+    fun searchNameChanged(text: String?)
+    {
+        resultString.value = "Hledáme"
+        searchName = text
+    }
+
+    val programs = Transformations.switchMap(_searchName){
+        val items : LiveData<List<StagProgramModel>> = programRepository.filterPrograms("%"+it+"%")
+        items
+    }
+
+    fun updateResultString(count: Int)
+    {
+        resultString.value = "Pro výraz '"+_searchName.value+"' bylo nalezeno " +count.toString() + " záznamů."
+    }
+
+    var resultString = MutableLiveData<String>("")
+//    var resultString: String?
+//        get() = _resultString.value
+//        set(value) { _resultString.value = value }
+
+
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean> get() = _eventNetworkError
     private var _isNetworkErrorShown = MutableLiveData<Boolean>(false)

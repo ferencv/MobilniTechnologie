@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Prohlížeč předmětů</string>
+    <string name="app_name">Prohlížeč programů</string>
     <string name="Search">Najít</string>
     <string name="SearchResults">Výsledky hledání</string>
     <string name="SubjectAbbrev">Zkratka předmětu</string>
@@ -13,4 +13,12 @@
     <string name="standardniDelkaStudia">Standardní délka studia</string>
     <string name="kod">Kód</string>
     <string name="nazev">Název</string>
+    <string name="zpetNaPrehled">Zpět na přehled</string>
+    <string name="titul">Titul</string>
+    <string name="forma">Forma</string>
+    <string name="garant">garant</string>
+    <string name="jazyk">jazyk</string>
+    <string name="isced">isced</string>
+    <string name="proVyraz">Pro výraz</string>
+    <string name="nazevProgramu">Název programu</string>
 </resources>

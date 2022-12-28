@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.stagviewer.R
 import com.example.stagviewer.databinding.FragmentDetailBinding
+import com.example.stagviewer.wut.SearchFragmentDirections
 
 class SubjectDetailFragment : Fragment() {
 
@@ -37,6 +39,10 @@ class SubjectDetailFragment : Fragment() {
             .get(DetailViewModel::class.java)
 
         binding.program = viewModel.program
+        binding.backButton.setOnClickListener({
+            val action = SubjectDetailFragmentDirections.actionSubjectDetailFragmentToSearchFragment()
+            binding.root.findNavController().navigate(action)
+        } )
 
         return binding.root
     }

@@ -10,6 +10,9 @@ interface StagProgramDao {
     @Query("select * from StagProgram")
     fun getStagPrograms(): LiveData<List<StagProgram>>
 
+    @Query("select * from StagProgram where nameCz like :searchName")
+    fun filterPrograms(searchName: String?): LiveData<List<StagProgram>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(programs: List<StagProgram>)
 }
