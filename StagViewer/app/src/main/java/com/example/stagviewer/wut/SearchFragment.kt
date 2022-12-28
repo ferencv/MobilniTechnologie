@@ -4,27 +4,31 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.stagviewer.Detail.SubjectDetailFragmentArgs
 import com.example.stagviewer.R
 import com.example.stagviewer.databinding.FragmentSearchBinding
 
 
 class SearchFragment : Fragment() {
 
+    private val args by navArgs<SearchFragmentArgs>()
     private var viewModelAdapter: ProgramAdapter? = null
 
     private val viewModel: SearchViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProvider(this, SearchViewModel.Factory(activity.application))
+        ViewModelProvider(this, SearchViewModelFactory(activity.application, args.filter?: ProgramsFilter("")))
             .get(SearchViewModel::class.java)
     }
 
@@ -63,10 +67,17 @@ class SearchFragment : Fragment() {
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
         viewModel.resultString.observe(viewLifecycleOwner, nameObserver)
 
+        val searchStringObserver = Observer<String> { newName ->
+            binding.nameInput.setText(newName, TextView.BufferType.EDITABLE)
+        }
+
+        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
+        viewModel._searchName.observe(viewLifecycleOwner, searchStringObserver)
+
         viewModelAdapter = ProgramAdapter(ProgramClick {
             //Toast.makeText(activity, "clicked", Toast.LENGTH_LONG).show()
 
-            val action = SearchFragmentDirections.actionSearchFragmentToSubjectDetailFragment(it)
+            val action = SearchFragmentDirections.actionSearchFragmentToSubjectDetailFragment(it, ProgramsFilter(viewModel.searchName?:""))
             binding.root.findNavController().navigate(action)
 
 //            binding.root.findNavController()

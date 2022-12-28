@@ -12,6 +12,11 @@
         <action
             android:id="@+id/action_searchFragment_to_subjectDetailFragment"
             app:destination="@id/subjectDetailFragment" />
+        <argument
+            android:name="filter"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="com.example.stagviewer.wut.ProgramsFilter" />
     </fragment>
     <fragment
         android:id="@+id/subjectDetailFragment"
@@ -23,5 +28,8 @@
         <argument
             android:name="program"
             app:argType="com.example.stagviewer.wut.StagProgramModel" />
+        <argument
+            android:name="filter"
+            app:argType="com.example.stagviewer.wut.ProgramsFilter" />
     </fragment>
 </navigation>

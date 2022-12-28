@@ -14,11 +14,11 @@ import kotlinx.coroutines.*
 import java.io.IOException
 
 
-class SearchViewModel(application: Application) : AndroidViewModel(application) {
+class SearchViewModel(application: Application, filter: ProgramsFilter?) : AndroidViewModel(application) {
 
     // The internal MutableLiveData String that stores the most recent response
     private val programRepository = StagProgramRepository(getDatabase(application))
-    private var _searchName = MutableLiveData<String>("")
+    var _searchName = MutableLiveData<String>(filter?.searchString?:"")
     var searchName: String?
         get() = _searchName.value
         set(value) { _searchName.value = value }
@@ -72,14 +72,14 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }
+}
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
-                @Suppress("UNCHECKED_CAST")
-                return SearchViewModel(app) as T
-            }
-            throw IllegalArgumentException("Unable to construct viewmodel")
+class SearchViewModelFactory(val app: Application, val filter: ProgramsFilter?) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return SearchViewModel(app, filter) as T
         }
+        throw IllegalArgumentException("Unable to construct viewmodel")
     }
 }

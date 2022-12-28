@@ -8,7 +8,6 @@
         <variable
             name="program"
             type="com.example.stagviewer.wut.StagProgramModel" />
-
     </data>
 
     <LinearLayout

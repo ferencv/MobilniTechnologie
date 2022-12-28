@@ -34,13 +34,14 @@ class SubjectDetailFragment : Fragment() {
             false
         )
 
-        viewModelFactory = DetailViewModelFactory(requireActivity().application, args.program)
+        viewModelFactory = DetailViewModelFactory(requireActivity().application, args.program, args.filter)
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(DetailViewModel::class.java)
 
         binding.program = viewModel.program
         binding.backButton.setOnClickListener({
-            val action = SubjectDetailFragmentDirections.actionSubjectDetailFragmentToSearchFragment()
+            var par = viewModel.filter
+            val action = SubjectDetailFragmentDirections.actionSubjectDetailFragmentToSearchFragment(par)
             binding.root.findNavController().navigate(action)
         } )
 
