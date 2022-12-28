@@ -3,26 +3,48 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TableRow android:background="#51B435" android:padding="10dp">
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/itemBorderColor"
+        android:paddingBottom="2dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp">
+
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/name"
+            android:layout_width="1dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Name" />
+            android:layout_weight="4"
+            android:background="@color/appBackground"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/nazev"
+            android:textStyle="bold" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/faculty"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/Faculty" />
+            android:background="@color/appBackground"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/Faculty"
+            android:textStyle="bold" />
+
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/type"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/Typ" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Year" />
-    </TableRow>
+            android:background="@color/appBackground"
+            android:fontFamily="sans-serif"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/kod"
+            android:textAlignment="textStart"
+            android:textStyle="bold" />
+    </LinearLayout>
 </layout>

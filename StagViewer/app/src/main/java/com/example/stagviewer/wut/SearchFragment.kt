@@ -52,13 +52,12 @@ class SearchFragment : Fragment() {
 
         binding.submitButton.setOnClickListener(
             {
-                viewModel.searchNameChanged(binding.facultyInput.text.toString())
+                viewModel.searchNameChanged(binding.nameInput.text.toString())
             });
 
-        // Create the observer which updates the UI.
         val nameObserver = Observer<String> { newName ->
-            // Update the UI, in this case, a TextView.
-            binding.textView2.text = newName
+            binding.resultStringLabel.text = newName
+            binding.resultStringLabel2.text = newName
         }
 
         // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
