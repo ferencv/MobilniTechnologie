@@ -1,13 +1,7 @@
 package com.example.stagviewer.wut
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.stagviewer.Database.getDatabase
 import com.example.stagviewer.repository.StagProgramRepository
 import kotlinx.coroutines.*
@@ -21,9 +15,14 @@ class SearchViewModel(application: Application, filter: ProgramsFilter?) : Andro
     var searchString = MutableLiveData<String>(filter?.searchString?:"")
 
     val programs = Transformations.switchMap(searchString){
-        val items : LiveData<List<StagProgramModel>> = programRepository.filterPrograms("%"+it+"%")
-        items
+        getProgramsAsync(it)
     }
+
+    fun getProgramsAsync(term: String) = liveData(Dispatchers.IO) {
+        emitSource(programRepository.filterPrograms("%" + term + "%"))
+    }
+
+
 
     fun updateResultString(count: Int)
     {
@@ -51,8 +50,8 @@ class SearchViewModel(application: Application, filter: ProgramsFilter?) : Andro
 
             } catch (networkError: IOException) {
                 // Show a Toast error message and hide the progress bar.
-                if(programs.value.isNullOrEmpty())
-                    _eventNetworkError.value = true
+                //if(programs.value.isNullOrEmpty())
+                _eventNetworkError.value = true
             }
         }
     }

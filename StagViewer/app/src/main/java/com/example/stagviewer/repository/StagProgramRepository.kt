@@ -24,10 +24,6 @@ class StagProgramRepository(private val database: StagProgramsDatabase) {
             it.toProgramModels()
         }
 
-//    val allprograms: LiveData<List<StagProgramModel>> = Transformations.map(database.stagProgramDao.getStagPrograms())
-//    {
-//        it.toProgramModels()
-//    }
 
     suspend fun refreshPrograms() {
         withContext(Dispatchers.IO) {
