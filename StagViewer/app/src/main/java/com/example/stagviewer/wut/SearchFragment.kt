@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,7 +13,6 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.stagviewer.Detail.SubjectDetailFragmentArgs
 import com.example.stagviewer.R
 import com.example.stagviewer.databinding.FragmentSearchBinding
 
@@ -54,34 +52,11 @@ class SearchFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        binding.submitButton.setOnClickListener(
-            {
-                viewModel.searchNameChanged(binding.nameInput.text.toString())
-            });
-
-        val nameObserver = Observer<String> { newName ->
-            binding.resultStringLabel.text = newName
-            binding.resultStringLabel2.text = newName
-        }
-
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel.resultString.observe(viewLifecycleOwner, nameObserver)
-
-        val searchStringObserver = Observer<String> { newName ->
-            binding.nameInput.setText(newName, TextView.BufferType.EDITABLE)
-        }
-
-        // Observe the LiveData, passing in this activity as the LifecycleOwner and the observer.
-        viewModel._searchName.observe(viewLifecycleOwner, searchStringObserver)
-
         viewModelAdapter = ProgramAdapter(ProgramClick {
-            //Toast.makeText(activity, "clicked", Toast.LENGTH_LONG).show()
 
-            val action = SearchFragmentDirections.actionSearchFragmentToSubjectDetailFragment(it, ProgramsFilter(viewModel.searchName?:""))
+            val action = SearchFragmentDirections.actionSearchFragmentToSubjectDetailFragment(it, ProgramsFilter(viewModel.searchString?.value?:""))
             binding.root.findNavController().navigate(action)
 
-//            binding.root.findNavController()
-//               .navigate(R.id.subjectDetailFragment)
         })
 
         binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {

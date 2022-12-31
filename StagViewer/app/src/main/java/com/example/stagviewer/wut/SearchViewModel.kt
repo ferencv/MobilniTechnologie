@@ -18,31 +18,19 @@ class SearchViewModel(application: Application, filter: ProgramsFilter?) : Andro
 
     // The internal MutableLiveData String that stores the most recent response
     private val programRepository = StagProgramRepository(getDatabase(application))
-    var _searchName = MutableLiveData<String>(filter?.searchString?:"")
-    var searchName: String?
-        get() = _searchName.value
-        set(value) { _searchName.value = value }
+    var searchString = MutableLiveData<String>(filter?.searchString?:"")
 
-    fun searchNameChanged(text: String?)
-    {
-        resultString.value = "Hledáme"
-        searchName = text
-    }
-
-    val programs = Transformations.switchMap(_searchName){
+    val programs = Transformations.switchMap(searchString){
         val items : LiveData<List<StagProgramModel>> = programRepository.filterPrograms("%"+it+"%")
         items
     }
 
     fun updateResultString(count: Int)
     {
-        resultString.value = "Pro výraz '"+_searchName.value+"' bylo nalezeno " +count.toString() + " záznamů."
+        resultString.value = "Pro výraz '"+searchString.value+"' bylo nalezeno " +count.toString() + " záznamů."
     }
 
     var resultString = MutableLiveData<String>("")
-//    var resultString: String?
-//        get() = _resultString.value
-//        set(value) { _resultString.value = value }
 
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)

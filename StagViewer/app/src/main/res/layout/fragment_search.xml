@@ -24,6 +24,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            android:text="@={viewModel.searchString}"
             />
 
         <Button
@@ -37,12 +38,19 @@
             />
 
         <TextView
+            android:id="@+id/testStringLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:text="@{viewModel.searchString}" />
+        <TextView
             android:id="@+id/resultStringLabel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:text="@{viewModel.resultString}" />
+            android:text="@={viewModel.resultString}" />
 
         <include layout="@layout/table_header"/>
 
@@ -58,7 +66,7 @@
             android:id="@+id/resultStringLabel2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.resultString}" />
+            android:text="@={viewModel.resultString}" />
 
     </LinearLayout>
 </layout>
