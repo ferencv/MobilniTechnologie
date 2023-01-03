@@ -10,8 +10,8 @@ interface StagProgramDao {
     @Query("select * from StagProgram")
     fun getStagPrograms(): LiveData<List<StagProgram>>
 
-    @Query("select * from StagProgram where nameCz like :searchName")
-    fun filterPrograms(searchName: String?): LiveData<List<StagProgram>>
+    @Query("select * from StagProgram where (:facultyId = '' OR faculty = :facultyId) AND nameCz like :searchName")
+    fun filterPrograms(facultyId: String?, searchName: String?): LiveData<List<StagProgram>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(programs: List<StagProgram>)
@@ -24,7 +24,7 @@ abstract class StagProgramsDatabase: RoomDatabase() {
 
 private lateinit var INSTANCE: StagProgramsDatabase
 
-fun getDatabase(context: Context): StagProgramsDatabase {
+fun getProgramsDatabase(context: Context): StagProgramsDatabase {
     synchronized(StagProgramsDatabase::class.java) {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,

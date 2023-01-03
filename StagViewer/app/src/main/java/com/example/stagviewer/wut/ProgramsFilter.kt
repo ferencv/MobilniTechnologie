@@ -6,4 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class ProgramsFilter(
     var searchString: String = "",
-):Parcelable
+    var facultyId: String = "",
+    var facultyName: String = "",
+
+    ):Parcelable

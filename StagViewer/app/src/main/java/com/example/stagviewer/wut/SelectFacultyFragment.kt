@@ -14,37 +14,36 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.stagviewer.R
-import com.example.stagviewer.databinding.FragmentSearchBinding
+import com.example.stagviewer.databinding.FragmentSelectFacultyBinding
 
 
-class SearchFragment : Fragment() {
+class SelectFacultyFragment : Fragment() {
 
-    private val args by navArgs<SearchFragmentArgs>()
-    private var viewModelAdapter: ProgramAdapter? = null
+    private val args by navArgs<SelectFacultyFragmentArgs>()
+    private var viewModelAdapter: FacultyBindingAdapter? = null
 
-    private val viewModel: SearchViewModel by lazy {
+    private val viewModel: FacultySelectViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProvider(this, SearchViewModelFactory(activity.application, args.filter?: ProgramsFilter("")))
-            .get(SearchViewModel::class.java)
+        ViewModelProvider(this, FacultySelectViewModelFactory(activity.application, args.filter?: ProgramsFilter("")))
+            .get(FacultySelectViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.programs.observe(viewLifecycleOwner, Observer<List<StagProgramModel>> { programs ->
-            programs?.apply {
-                viewModelAdapter?.programs = programs
-                viewModel.updateResultString(programs.size)
+        viewModel.faculties.observe(viewLifecycleOwner, Observer<List<StagFacultyModel>> { items ->
+            items?.apply {
+                viewModelAdapter?.faculties = items
             }
         })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val binding: FragmentSearchBinding = DataBindingUtil.inflate(
+        val binding: FragmentSelectFacultyBinding = DataBindingUtil.inflate(
             inflater,
-            R.layout.fragment_search,
+            R.layout.fragment_select_faculty,
             container,
             false)
         // Set the lifecycleOwner so DataBinding can observe LiveData
@@ -52,26 +51,14 @@ class SearchFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        binding.facultySelect.setOnClickListener()
-        {
-            val action = SearchFragmentDirections.actionSearchFragmentToSelectFacultyFragment(ProgramsFilter(
-                viewModel.searchString?.value?:"",
-                "",
-                ""))
-            binding.root.findNavController().navigate(action)
-        }
+        viewModelAdapter = FacultyBindingAdapter(FacultyClick {
 
-        viewModelAdapter = ProgramAdapter(ProgramClick {
-
-            val action = SearchFragmentDirections.actionSearchFragmentToSubjectDetailFragment(it, ProgramsFilter(
-                viewModel.searchString?.value?:"",
-                viewModel.facultyId?.value?:"",
-                viewModel.facultyName?.value?:""))
+            val action = SelectFacultyFragmentDirections.actionSelectFacultyFragmentToSearchFragment(ProgramsFilter(viewModel.searchString?.value?:"", it.abbrev, it.name))
             binding.root.findNavController().navigate(action)
 
         })
 
-        binding.root.findViewById<RecyclerView>(R.id.recycler_view).apply {
+        binding.root.findViewById<RecyclerView>(R.id.faculty_recycler_view).apply {
             layoutManager = LinearLayoutManager(context)
             adapter = viewModelAdapter
         }
@@ -88,7 +75,7 @@ class SearchFragment : Fragment() {
 
     private fun onNetworkError() {
         if(!viewModel.isNetworkErrorShown.value!!) {
-            Toast.makeText(activity, "Programy: Nepodařilo se načíst data ze služby, budou se zobrazovat pouze dříve zakešované údaje.", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity,"Fakulty: Nepodařilo se načíst data ze služby, budou se zobrazovat pouze dříve zakešované údaje.", Toast.LENGTH_LONG).show()
             viewModel.onNetworkErrorShown()
         }
     }

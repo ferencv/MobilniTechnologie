@@ -21,4 +21,8 @@
     <string name="isced">isced</string>
     <string name="proVyraz">Pro výraz</string>
     <string name="nazevProgramu">Název programu</string>
+    <string name="OK">OK</string>
+    <string name="Storno">Storno</string>
+    <string name="ZmenitFakultu">Změnit fakultu</string>
+    <string name="VyberteFakultu">Vyberte fakultu</string>
 </resources>

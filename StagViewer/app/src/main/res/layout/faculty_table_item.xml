@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="faculty"
+            type="com.example.stagviewer.wut.StagFacultyModel" />
+        <variable
+            name="clickCallback"
+            type="com.example.stagviewer.wut.FacultyClick" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/itemBackgroundColor"
+        android:paddingBottom="1dp"
+        android:onClick="@{() -> clickCallback.onClick(faculty)}"
+        >
+
+        <TextView
+            android:id="@+id/facultyAbbrev"
+            android:layout_width="1dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@{faculty.abbrev}"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/appBackground"
+            />
+
+        <TextView
+            android:id="@+id/facultyName"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:text="@{faculty.name}"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@color/appBackground"
+            />
+
+    </LinearLayout>
+
+
+</layout>

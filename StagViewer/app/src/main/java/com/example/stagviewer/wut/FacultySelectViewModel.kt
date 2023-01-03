@@ -10,32 +10,13 @@ import kotlinx.coroutines.*
 import java.io.IOException
 
 
-class SearchViewModel(application: Application, filter: ProgramsFilter?) : AndroidViewModel(application) {
+class FacultySelectViewModel(application: Application, filter: ProgramsFilter?) : AndroidViewModel(application) {
 
-    // The internal MutableLiveData String that stores the most recent response
-    private val programRepository = StagProgramRepository(getProgramsDatabase(application))
+    private val facultyRepository = StagFacultyRepository(getFacultiesDatabase(application))
+    val faculties = facultyRepository.getFaculties()
 
     var searchString = MutableLiveData<String>(filter?.searchString?:"")
     var facultyId = MutableLiveData<String>(filter?.facultyId?:"")
-    var facultyName = MutableLiveData<String>(filter?.facultyName?:"")
-    var facultyResultString = MutableLiveData<String>(filter?.facultyName ?: "")
-
-    val programs = Transformations.switchMap(searchString){
-        getProgramsAsync(facultyId.value, it)
-    }
-
-    fun getProgramsAsync(facultyId:String?, term: String) = liveData(Dispatchers.IO) {
-        emitSource(programRepository.filterPrograms(facultyId?:"","%" + term + "%"))
-    }
-
-
-
-    fun updateResultString(count: Int)
-    {
-        resultString.value = " Pro výraz '"+searchString.value+"' bylo nalezeno " +count.toString() + " záznamů."
-    }
-
-    var resultString = MutableLiveData<String>("")
 
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
@@ -50,7 +31,7 @@ class SearchViewModel(application: Application, filter: ProgramsFilter?) : Andro
     private fun refreshDataFromRepository() {
         viewModelScope.launch {
             try {
-                programRepository.refreshPrograms()
+                facultyRepository.refreshFaculties()
                 _eventNetworkError.value = false
                 _isNetworkErrorShown.value = false
 
@@ -67,11 +48,11 @@ class SearchViewModel(application: Application, filter: ProgramsFilter?) : Andro
     }
 }
 
-class SearchViewModelFactory(val app: Application, val filter: ProgramsFilter?) : ViewModelProvider.Factory {
+class FacultySelectViewModelFactory(val app: Application, val filter: ProgramsFilter?) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(FacultySelectViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SearchViewModel(app, filter) as T
+            return FacultySelectViewModel(app, filter) as T
         }
         throw IllegalArgumentException("Unable to construct viewmodel")
     }
