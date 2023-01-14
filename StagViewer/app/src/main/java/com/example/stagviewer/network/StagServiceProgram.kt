@@ -38,7 +38,7 @@ fun List<StagProgramDTO>.toPrograms(): List<StagProgram> {
 }
 object StagApiProgram {
     private const val BASE_URL =
-        "https://stagservices.upol.cz/ws/services/rest2/"
+        "https://stagservices.utb.cz/ws/services/rest2/"
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
