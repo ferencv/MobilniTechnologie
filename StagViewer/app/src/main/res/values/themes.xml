@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.App.Starting" parent="Theme.AppCompat">
+    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         // Set the splash screen background, animated icon, and animation duration.
         <item name="windowSplashScreenBackground">@color/appBackground</item>
 
@@ -22,8 +22,9 @@
         // animated drawable. One of these is required.
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="windowSplashScreenIconBackgroundColor">@color/ic_launcher_background</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/utb_logo</item>
 
-        <item name="windowSplashScreenAnimationDuration">200</item>  # Required for animated icons
+        <item name="windowSplashScreenAnimationDuration">2000</item>  # Required for animated icons
 
         // Set the theme of the Activity that directly follows your splash screen.
         <item name="postSplashScreenTheme">@style/Theme.StagViewer</item>  # Required.

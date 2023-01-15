@@ -6,10 +6,14 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.example.stagviewer.wut.MainViewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
 
     protected fun getLocationOnScreen(mEditText: View): Rect {
         val mRect = Rect()
@@ -43,9 +47,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val splashScreen = installSplashScreen()
+        installSplashScreen().apply{
+            setKeepVisibleCondition{
+                viewModel.isLoading.value
+            }
+        }
         setContentView(R.layout.activity_main)
-
 
     }
 }
