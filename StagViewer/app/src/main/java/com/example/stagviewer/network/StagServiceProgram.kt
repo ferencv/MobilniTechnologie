@@ -11,6 +11,7 @@ import retrofit2.http.GET
 
 interface StagServiceProgram {
     @GET("programy/getStudijniProgramy?kod=%25&forma=K&outputFormat=JSON&rok=2022")
+    //programy/getStudijniProgramy?kod=%25&fakulta=FAI&outputFormat=XLSX
     suspend fun getProgrammes(): StagProgramsResponse
 }
 
@@ -38,7 +39,8 @@ fun List<StagProgramDTO>.toPrograms(): List<StagProgram> {
 }
 object StagApiProgram {
     private const val BASE_URL =
-        "https://stagservices.utb.cz/ws/services/rest2/"
+        "https://stag-ws.utb.cz/ws/services/rest2/"
+    //"https://stag-ws.utb.cz/ws/services/rest2/"
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())

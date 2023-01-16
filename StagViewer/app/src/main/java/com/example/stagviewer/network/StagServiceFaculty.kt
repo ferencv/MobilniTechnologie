@@ -26,7 +26,8 @@ fun List<StagFacultyDTO>.toFaculties(): List<StagFaculty> {
 
 object StagApiFaculty {
     private const val BASE_URL =
-        "https://stagservices.utb.cz/ws/services/rest2/"
+        "https://stag-ws.utb.cz/ws/services/rest2/"
+    //https://stagservices.upol.cz/ws/services/rest2/
 
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())

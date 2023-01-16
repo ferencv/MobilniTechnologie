@@ -29,7 +29,7 @@ fun getProgramsDatabase(context: Context): StagProgramsDatabase {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
                 StagProgramsDatabase::class.java,
-                "StagPrograms").build()
+                "StagProgramsYtb").build()
         }
     }
     return INSTANCE

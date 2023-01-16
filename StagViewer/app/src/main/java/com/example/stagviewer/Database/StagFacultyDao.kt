@@ -26,7 +26,7 @@ fun getFacultiesDatabase(context: Context): StagFacultiesDatabase {
         if (!::INSTANCE.isInitialized) {
             INSTANCE = Room.databaseBuilder(context.applicationContext,
                 StagFacultiesDatabase::class.java,
-                "StagFaculties").build()
+                "StagFacultiesUtb").build()
         }
     }
     return INSTANCE
